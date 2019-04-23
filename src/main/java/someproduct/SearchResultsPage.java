@@ -9,15 +9,20 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class SearchResultsPage {
+
+    private static final String CURRENT_NUMBER_OF_PAGE_LOC = "#foot #nav td.cur";
+    private static final String NEXT_PAGE_LOC = "#foot #nav #pnnext";
+    private static final String RESULT_LOC = "#ires .g";
+
     public ElementsCollection getResults() {
-        return $$("#ires .g");
+        return $$(RESULT_LOC);
     }
 
     public int nextPage() {
-        SelenideElement currentPageNumber = $("#foot #nav td.cur");
+        SelenideElement currentPageNumber = $(CURRENT_NUMBER_OF_PAGE_LOC);
         Integer orderNumber = Integer.parseInt(currentPageNumber.text());
         orderNumber++;
-        $("#foot #nav #pnnext").should(Condition.visible).click();
+        $(NEXT_PAGE_LOC).should(Condition.visible).click();
         currentPageNumber.shouldHave(text(orderNumber.toString()));
         return orderNumber;
     }

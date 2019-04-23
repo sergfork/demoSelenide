@@ -8,21 +8,22 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.testng.Assert.fail;
 
-public class BaseUI {
+public class GoogleTests {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseUI.class);
+    private static final Logger logger = LoggerFactory.getLogger(GoogleTests.class);
     private static final String BROWSER = System.getenv("browser");
     private static String searchedWord = System.getenv("searchedWord");
     private static int EXPECTED_PAGE = Integer.getInteger("findOnPages");
     private static String EXPECTED_DOMAIN = System.getenv("lookingFordomain");
 
-    public BaseUI() {
+    public GoogleTests() {
         switch (BROWSER) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();

@@ -4,7 +4,7 @@
 <suite name="UI">
     <test name="Search in Google">
         <classes>
-            <class name="someproduct.BaseUI"/>
+            <class name="someproduct.GoogleTests"/>
         </classes>
     </test>
 </suite>
