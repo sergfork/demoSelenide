@@ -60,7 +60,7 @@ public class GoogleTests {
         while(currentPage < EXPECTED_PAGE && !result.isPresent()) {
             SearchResultsPage results = new SearchResultsPage();
             List<String> foundTexts = results.getResults().texts();
-            result = foundTexts.stream().filter(l -> l.contains(EXPECTED_DOMAIN)).findFirst();
+            result = Utils.searchOnThePage(foundTexts, EXPECTED_DOMAIN);
             if(result.isPresent()) {
                 logger.info("page is: " + currentPage);
                 logger.info(result.toString());
@@ -70,4 +70,5 @@ public class GoogleTests {
         assertThat(EXPECTED_DOMAIN + " was not found on " + EXPECTED_PAGE + " page(s)",
                 result.isPresent(), is(true));
     }
+
 }

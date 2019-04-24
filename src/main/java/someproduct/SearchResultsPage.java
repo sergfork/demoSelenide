@@ -5,8 +5,10 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 public class SearchResultsPage {
 
@@ -25,5 +27,11 @@ public class SearchResultsPage {
         $(NEXT_PAGE_LOC).should(Condition.visible).click();
         currentPageNumber.shouldHave(text(orderNumber.toString()));
         return orderNumber;
+    }
+
+    public void openFirstResultLink() {
+        String beforeTitle = title();
+        $("#ires .g").find(".r a").click();
+        assertThat(title(), is(not(beforeTitle)));
     }
 }

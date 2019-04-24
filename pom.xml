@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <testfile>testng</testfile>
         <browser>chrome</browser>
         <searchedWord>automation</searchedWord>
         <findOnPages>5</findOnPages>
@@ -41,6 +42,17 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -78,7 +90,7 @@
                     </environmentVariables>
                     <suiteXmlFiles>
                         <suiteXmlFile>
-                            src/test/resources/allTests.xml
+                            src/test/resources/${testfile}.xml
                         </suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
