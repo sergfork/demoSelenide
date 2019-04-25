@@ -17,6 +17,6 @@ mvn clean -Dtestfile=selenide test
 
 ### Parameters
 
-keyword to search: "automation"
-Searched domain in results: testautomationday.com
-Find on page(s): 1-5
+* keyword to search: "automation"
+* Searched domain in results: testautomationday.com
+* Find on page(s): 1-5
