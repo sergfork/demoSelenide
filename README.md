@@ -4,7 +4,7 @@
 -----------
 Just an example how to use Selenide, Selenide & Cucumber.
 
-##QUICK START
+## QUICK START
 -----------
 mvn clean test
 
