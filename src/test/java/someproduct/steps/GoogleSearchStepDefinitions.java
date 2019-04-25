@@ -4,38 +4,37 @@ import com.codeborne.selenide.Configuration;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
+import someproduct.GooglePage;
 import someproduct.SearchResultsPage;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 import static someproduct.Utils.searchOnThePage;
 
 public class GoogleSearchStepDefinitions {
-    private String keyword;
 
     @Given("an open browser with google.com")
     public void openGoogleSearch() {
         Configuration.browser = "chrome";
+        Configuration.baseUrl = "https://google.com";
         Configuration.reportsFolder = "target/surefire-reports";
-        open("https://google.com/ncr");
+        open("/ncr");
     }
 
     @When("a keyword (.*) is entered in input field")
     public void enterKeyword(String keyword) {
-        this.keyword = keyword;
-        $(By.name("q")).val(keyword).pressEnter();
+        new GooglePage().searchFor(keyword);
     }
 
     @Then("open the first link on search results page")
     public void topTenMatchesShouldBeShown() {
-        String beforeTitle = title();
-        $("#ires .g").find(".r a").click();
-        assertThat(title(), is(not(beforeTitle)));
+        new SearchResultsPage().openFirstResultLink();
     }
 
     @Then("title contains (.*) searched word")
