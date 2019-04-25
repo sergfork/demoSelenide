@@ -9,11 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <testfile>testng</testfile>
-        <browser>chrome</browser>
-        <searchedWord>automation</searchedWord>
-        <findOnPages>5</findOnPages>
-        <lookingFordomain>testautomationday.com</lookingFordomain>
+        <testfile>cucumber</testfile>
     </properties>
 
     <dependencies>
@@ -75,19 +71,6 @@
                     <skipTests>false</skipTests>
                     <testFailureIgnore>true</testFailureIgnore>
                     <forkMode>once</forkMode>
-
-                    <systemPropertyVariables>
-                        <browser>${browser}</browser>
-                        <searchedWord>${searchedWord}</searchedWord>
-                        <findOnPages>${findOnPages}</findOnPages>
-                        <lookingFordomain>${lookingFordomain}</lookingFordomain>
-                    </systemPropertyVariables>
-                    <environmentVariables>
-                        <browser>${browser}</browser>
-                        <searchedWord>${searchedWord}</searchedWord>
-                        <findOnPages>${findOnPages}</findOnPages>
-                        <lookingFordomain>${lookingFordomain}</lookingFordomain>
-                    </environmentVariables>
                     <suiteXmlFiles>
                         <suiteXmlFile>
                             src/test/resources/${testfile}.xml

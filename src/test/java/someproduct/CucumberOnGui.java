@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
         features = {"src/test/resources/features"},
         glue = {"someproduct.steps"}
 )
-public class UITest {
+public class CucumberOnGui {
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass(alwaysRun = true)

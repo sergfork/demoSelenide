@@ -3,7 +3,7 @@
 <suite name="Google Suite" verbose="1" thread-count="1" parallel="tests" configfailurepolicy="continue">
     <test name="Google UI automation">
         <classes>
-            <class name="someproduct.UITest">
+            <class name="someproduct.CucumberOnGui">
                 <methods>
                     <include name="scenario"/>
                 </methods>

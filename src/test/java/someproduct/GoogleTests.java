@@ -1,8 +1,8 @@
 package someproduct;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -13,36 +13,15 @@ import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.testng.Assert.fail;
 
 public class GoogleTests {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleTests.class);
-    private static final String BROWSER = System.getenv("browser");
-    private static String searchedWord = System.getenv("searchedWord");
-    private static int EXPECTED_PAGE = Integer.getInteger("findOnPages");
-    private static String EXPECTED_DOMAIN = System.getenv("lookingFordomain");
 
-    public GoogleTests() {
-        switch (BROWSER) {
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                break;
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                break;
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                break;
-            default:
-                fail("Incorrect browser. Please check browser name");
-                break;
-        }
-    }
-
+    @Parameters({"searchedWord", "baseURL"})
     @Test
-    public void verifySerchedWorldInTitle() {
-        open("https://google.com/ncr");
+    public void verifySerchedWorldInTitle(String searchedWord, String baseURL) {
+        open(baseURL);
         new GooglePage().searchFor(searchedWord);
 
         logger.info("title is: " + title());
@@ -51,23 +30,24 @@ public class GoogleTests {
     }
 
     @Test
-    public void verifySerchedWorldInResults() {
-        open("https://google.com/ncr");
+    @Parameters({"searchedWord", "lookingFordomain", "findOnPages", "baseURL"})
+    public void verifySerchedWorldInResults(String searchedWord, String lookingFordomain, int findOnPages, String baseURL) {
+        open(baseURL);
         new GooglePage().searchFor(searchedWord);
 
         int currentPage = 1;
         Optional<String> result = Optional.empty();
-        while(currentPage < EXPECTED_PAGE && !result.isPresent()) {
+        while (currentPage < findOnPages && !result.isPresent()) {
             SearchResultsPage results = new SearchResultsPage();
             List<String> foundTexts = results.getResults().texts();
-            result = Utils.searchOnThePage(foundTexts, EXPECTED_DOMAIN);
+            result = Utils.searchOnThePage(foundTexts, lookingFordomain);
             if(result.isPresent()) {
                 logger.info("page is: " + currentPage);
                 logger.info(result.toString());
             }
             currentPage = results.nextPage();
         }
-        assertThat(EXPECTED_DOMAIN + " was not found on " + EXPECTED_PAGE + " page(s)",
+        assertThat(lookingFordomain + " was not found on " + findOnPages + " page(s)",
                 result.isPresent(), is(true));
     }
 
