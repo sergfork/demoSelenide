@@ -1,11 +1,11 @@
 # demoSelenide
 
 ## Information
------------
+
 Just an example how to use Selenide, Selenide & Cucumber.
 
 ## QUICK START
------------
+
 mvn clean test
 
 By default maven runs cucumber.xml
