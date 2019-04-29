@@ -7,7 +7,6 @@ import cucumber.api.java.en.When;
 import someproduct.GooglePage;
 import someproduct.SearchResultsPage;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -15,7 +14,6 @@ import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static someproduct.Utils.searchOnThePage;
 
 public class GoogleSearchStepDefinitions {
 
@@ -44,14 +42,7 @@ public class GoogleSearchStepDefinitions {
 
     @Then("verify that there is (.*) domain on (\\d+) search results pages")
     public void theFirstOneShouldContainKeyword(String expectedDomain, int expectedPages) {
-        int currentPage = 1;
-        Optional<String> result = Optional.empty();
-        while (currentPage < expectedPages && !result.isPresent()) {
-            SearchResultsPage results = new SearchResultsPage();
-            List<String> foundTexts = results.getResults().texts();
-            result = searchOnThePage(foundTexts, expectedDomain);
-            currentPage = results.nextPage();
-        }
+        Optional<String> result = new SearchResultsPage().searchOnPages(expectedDomain, expectedPages);
         assertThat(expectedDomain + " was not found on " + expectedPages + " page(s)",
                 result.isPresent(), is(true));
     }

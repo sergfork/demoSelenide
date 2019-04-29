@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -20,7 +19,7 @@ public class GoogleTests {
 
     @Parameters({"searchedWord", "baseURL"})
     @Test
-    public void verifySerchedWorldInTitle(String searchedWord, String baseURL) {
+    public void verifySearchedWorldInTitle(String searchedWord, String baseURL) {
         open(baseURL);
         new GooglePage().searchFor(searchedWord);
 
@@ -30,24 +29,13 @@ public class GoogleTests {
     }
 
     @Test
-    @Parameters({"searchedWord", "lookingFordomain", "findOnPages", "baseURL"})
-    public void verifySerchedWorldInResults(String searchedWord, String lookingFordomain, int findOnPages, String baseURL) {
+    @Parameters({"searchedWord", "lookingForDomain", "findOnPages", "baseURL"})
+    public void verifySearchedWorldInResults(String searchedWord, String lookingForDomain, int findOnPages, String baseURL) {
         open(baseURL);
-        new GooglePage().searchFor(searchedWord);
-
-        int currentPage = 1;
-        Optional<String> result = Optional.empty();
-        while (currentPage < findOnPages && !result.isPresent()) {
-            SearchResultsPage results = new SearchResultsPage();
-            List<String> foundTexts = results.getResults().texts();
-            result = Utils.searchOnThePage(foundTexts, lookingFordomain);
-            if(result.isPresent()) {
-                logger.info("page is: " + currentPage);
-                logger.info(result.toString());
-            }
-            currentPage = results.nextPage();
-        }
-        assertThat(lookingFordomain + " was not found on " + findOnPages + " page(s)",
+        Optional<String> result = new GooglePage()
+                .searchFor(searchedWord)
+                .searchOnPages(lookingForDomain, findOnPages);
+        assertThat(lookingForDomain + " was not found on " + findOnPages + " page(s)",
                 result.isPresent(), is(true));
     }
 

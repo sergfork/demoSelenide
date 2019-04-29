@@ -7,7 +7,7 @@
 
         <parameter name="searchedWord" value="automation"/>
         <parameter name="findOnPages" value="5"/>
-        <parameter name="lookingFordomain" value="testautomationday.com"/>
+        <parameter name="lookingForDomain" value="testautomationday.com"/>
         <parameter name="baseURL" value="https://google.com/ncr"/>
 
         <classes>
